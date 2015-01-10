@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package net.kados.gtp.app.libs.Teryt.Subjects;
 
 import java.io.BufferedInputStream;
@@ -23,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Mateusz
  */
-public class Cities extends ParserDriver
+public class Precincts extends ParserDriver
 {
     @Autowired
     private ParserMessages parserMessages;
@@ -78,12 +83,12 @@ public class Cities extends ParserDriver
                     this.endElement(reader.getLocalName());
                     break;
             }
-            
-            if(cities.size() >= 1000)
+
+            if(precincts.size() >= 1000)
             {
                 this.save();
             }
-            
+
             parserMessages.sendProgress(reader.getLocation().getLineNumber(), simc.getLines());
         }
 
@@ -120,22 +125,22 @@ public class Cities extends ParserDriver
 
     private void appendData(String symbol, String subSymbol)
     {
-        if (symbol.equals(subSymbol)) 
+        if ( ! symbol.equals(subSymbol)) 
         {
-            cities.add(currentRow);
+            precincts.add(currentRow);
         }
     }
-  
+
     protected void save()
     {
         try
         {
-            this.city.fillTable(cities);
-            cities.clear();
-        } 
+            this.precinct.fillTable(precincts);
+            precincts.clear();
+        }
         catch (SQLException ex)
         {
-            System.out.println(ex.toString());
+            parserMessages.sendMessage(ex.toString());
         }
     }
 }

@@ -71,17 +71,7 @@ public class Streets extends ParserDriver
             switch (next)
             {
                 case XMLStreamConstants.START_ELEMENT:
-
-                    switch (reader.getLocalName()) {
-                        case "row":
-                            currentRow = new HashMap();
-                            break;
-
-                        case "col":
-                            currentColType = reader.getAttributeValue(0);
-                            break;
-                    }
-
+                    this.newElement(reader.getLocalName());
                     break;
 
                 case XMLStreamConstants.CHARACTERS:
@@ -89,18 +79,7 @@ public class Streets extends ParserDriver
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
-
-                    switch (reader.getLocalName()) 
-                    {
-                        case "row":
-                            streets.add(currentRow);
-                            break;
-
-                        case "col":
-                            currentRow.put(currentColType, tagContent);
-                            break;
-                    }
-
+                    this.endElement(reader.getLocalName());
                     break;
             }
 
@@ -115,6 +94,20 @@ public class Streets extends ParserDriver
         this.save();
     }
     
+    private void newElement(String type)
+    {
+         switch (type) 
+         {
+            case "row":
+                currentRow = new HashMap();
+                break;
+
+            case "col":
+                currentColType = reader.getAttributeValue(0);
+                break;
+        }
+    }
+
     protected void save()
     {
         try
@@ -124,7 +117,21 @@ public class Streets extends ParserDriver
         } 
         catch (SQLException ex)
         {
-            System.out.println(ex.toString());
+            parserMessages.sendMessage(ex.toString());
+        }
+    }
+
+    private void endElement(String type)
+    {
+        switch (type) 
+        {
+            case "row":
+                streets.add(currentRow);
+                break;
+
+            case "col":
+                currentRow.put(currentColType, tagContent);
+                break;
         }
     }
 }

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import net.kados.gtp.core.SceneManager.SceneManager;
-import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Query
@@ -16,7 +15,6 @@ public class Query
     private HashMap<String, String> data;
     
     private Connection conn;
-    private DSLContext dsl;
     
     public Query setConnectionData(String host, String port, String base, String login, String pass)
     {
