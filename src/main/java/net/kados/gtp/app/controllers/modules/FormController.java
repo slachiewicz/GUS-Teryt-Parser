@@ -135,7 +135,7 @@ public class FormController implements Initializable, SceneManagerShowable
     
     private boolean checkDBConection()
     {
-         boolean state = false;
+        boolean state = false;
         
         try
         {
@@ -145,7 +145,7 @@ public class FormController implements Initializable, SceneManagerShowable
                     dbInpBase.getText().trim(),
                     dbInpLogin.getText().trim(),
                     dbInpPass.getText().trim()
-            ).getConnection();
+            ).getConn();
 
             if(connection.isValid(1))
             {
@@ -159,7 +159,10 @@ public class FormController implements Initializable, SceneManagerShowable
         }
         catch (SQLException ex)
         {
-            Dialogs.create().owner(sceneManager.getStageCurrent()).title("Bład SQL'a").showException(ex);
+            Dialogs.create()
+                    .owner(sceneManager.getStageCurrent())
+                    .title("Bład SQL'a")
+                    .showException(ex);
         }
 
         return state;

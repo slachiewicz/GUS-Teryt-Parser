@@ -2,21 +2,23 @@ package net.kados.gtp.app.repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.kados.gtp.core.Database.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class City
+public class City implements TableFillable
 {
     @Autowired
     private Query query;
 
+    @Override
     public boolean fillTable(ArrayList<HashMap<String, String>> cities) throws SQLException 
     {
         int sizeCount        = 0;
-        Connection connection = query.getConnection();
+        Connection connection = query.getConn();
         PreparedStatement ps = connection.prepareStatement(
                 "INSERT IGNORE INTO "
                 + "location_city(idCommune, idDistrict, idProvince, idCountry, tidCity, tidCommune, tidDistrict, tidProvince, name) "
@@ -59,5 +61,15 @@ public class City
         ps.close();
 
         return (sizeCount == cities.size());
+    }
+
+    @Override
+    public int getCount() throws SQLException
+    {
+        ResultSet rs = query.getConn()
+                .createStatement()
+                .executeQuery("SELECT count(id) as count FROM location_city");
+        
+        return rs.next() ? rs.getInt("count") : null;
     }
 }

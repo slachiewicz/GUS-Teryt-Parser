@@ -29,7 +29,7 @@ public class Query
         return this;
     }
 
-    public Connection getConnection()
+    public Connection getConn()
     {
         try
         {

@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import net.kados.gtp.app.controllers.layouts.MainController;
 import net.kados.gtp.app.controllers.modules.FormController;
 import net.kados.gtp.app.controllers.modules.ParsingController;
+import net.kados.gtp.app.controllers.modules.SummaryController;
 import net.kados.gtp.app.libs.FileBrowser.Browser;
 import net.kados.gtp.app.libs.FileBrowser.FileInfo;
 import net.kados.gtp.app.libs.Teryt.Parser;
@@ -38,6 +39,12 @@ public class AppConfig
     public FormController formController()
     {
         return new FormController();
+    }
+    
+    @Bean
+    public SummaryController summaryController()
+    {
+        return new SummaryController();
     }
 
     @Bean
