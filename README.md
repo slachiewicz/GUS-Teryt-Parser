@@ -24,4 +24,5 @@ Aplikacja przekształca plik XML do MySQL.
   3. Zatwierdz.
 
 GUI:
+
 ![alt tag](https://github.com/Digital87/GUS-Teryt-Parser/blob/master/img/gtp.jpg)
